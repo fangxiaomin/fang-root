@@ -1,0 +1,51 @@
+#服务名称
+spring:
+  application:
+    name: fang-order
+
+
+
+#eureka gateway
+eureka:
+  client:
+    serviceUrl:
+      defaultZone:  http://admin:fxm-pactera@127.0.0.1:1111/eureka
+      #http://134.224.249.33:1111/eureka/  测试库
+    registry-fetch-interval-seconds: 5
+    instance-info-replication-interval-seconds: 10
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}  #固定端口
+    #    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${randomServerPort.value[7000,7005]}}  #随机端口
+    #instance-id: ${spring.application.name}:${docker.ipAddress}:${spring.application.instance_id:${server.port}}
+    lease-renewal-interval-in-seconds: 10  #每隔几秒告诉eureka服务器我还存活，用于心跳检测
+    lease-expiration-duration-in-seconds: 10 #如果心跳检测一直没有发送，10秒后会从eureka服务器中将此服务剔除
+    status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/doc.html #固定端口
+#    status-page-url: http://${spring.cloud.client.ip-address}:${randomServerPort.value[7000,7005]}/document.html #随机端口
+
+
+ribbon:
+  ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间
+  OkToRetryOnAllOperations: true # 是否对所有操作重试
+  MaxAutoRetries: 1 # 同一实例的重试次数
+  MaxAutoRetriesNextServer: 1 # 同一服务不同实例的重试次数
+  ReadTimeout: 16000 # 通信超时时间(ms)
+  ConnectTimeout: 16000 # 连接超时时间(ms)
+  #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule #修改负载均衡算法
+
+#在Feign中开启Hystrix  否则不能进行服务降级
+feign:
+  hystrix:
+    enabled: true
+  compression:
+    request:
+      enabled: false #是否对请求进行GZIP压缩
+      mime-types: text/xml,application/xml,application/json #指定压缩的请求数据类型
+      min-request-size: 2048 #超过该大小的请求会被压缩
+    response:
+      enabled: false #是否对响应进行GZIP压缩
+
+# 开启日志的Feign客户端
+logging:
+  level:    #修改日志级别
+    com.jourwon.springcloud.service: debug

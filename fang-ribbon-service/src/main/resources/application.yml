@@ -1,0 +1,5 @@
+server:
+  port: 7073
+
+service-url:
+  user-service: http://fang-order
