@@ -4,6 +4,8 @@ import com.fang.order.dto.OrderUserDto;
 import com.fang.order.entity.Order;
 import com.fang.order.parms.OrderInfoParm;
 
+import java.util.List;
+
 /**
  * @description:
  * @projectName:fang-root
@@ -16,4 +18,5 @@ public interface IOrderService {
 
     OrderUserDto getOrderInfo(OrderInfoParm parm);
     Order getOrder(Long id);
+    List<Order> listUsersByIds(List<Long> ids);
 }

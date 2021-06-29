@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @description:
@@ -35,5 +37,28 @@ public class OrderServiceImpl implements IOrderService {
         order.setPassword("111111");
         order.setUsername("测试Ribbon负载均衡");
         return order;
+    }
+
+    @Override
+    public List<Order> listUsersByIds(List<Long> ids) {
+        List<Order> list = new ArrayList<>();
+        Order order = new Order();
+        order.setId(3L);
+        order.setPassword("3333");
+        order.setUsername("测试Hystris合并功能 order ");
+
+        Order order1 = new Order();
+        order1.setId(3L);
+        order1.setPassword("3333");
+        order1.setUsername("测试Hystris合并功能 order 1 ");
+
+        Order order2 = new Order();
+        order2.setId(3L);
+        order2.setPassword("3333");
+        order2.setUsername("测试Hystris合并功能 orde 2 ");
+        list.add(order);
+        list.add(order1);
+        list.add(order2);
+        return list;
     }
 }
