@@ -1,7 +1,7 @@
 #服务名称
 spring:
   application:
-    name: hystrix-client
+    name: hystrix-dashboard
 
 
 
@@ -23,10 +23,4 @@ eureka:
     status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/doc.html #固定端口
 #    status-page-url: http://${spring.cloud.client.ip-address}:${randomServerPort.value[7000,7005]}/document.html #随机端口
 
-####开启Actuator的hystrix.stream端点
-management:
-  endpoints:
-    web:
-      exposure:
-        #暴露hystrix监控端点
-        include: hystrix.stream
+

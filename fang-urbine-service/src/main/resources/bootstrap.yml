@@ -1,7 +1,7 @@
 #服务名称
 spring:
   application:
-    name: hystrix-client
+    name: turbine-service
 
 
 
@@ -23,10 +23,11 @@ eureka:
     status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/doc.html #固定端口
 #    status-page-url: http://${spring.cloud.client.ip-address}:${randomServerPort.value[7000,7005]}/document.html #随机端口
 
-####开启Actuator的hystrix.stream端点
-management:
-  endpoints:
-    web:
-      exposure:
-        #暴露hystrix监控端点
-        include: hystrix.stream
+####开启 Turbine相关配置
+turbine:
+  # 指定需要收集信息的服务名称
+  app-config: hystrix-client
+  # 指定服务所属集群
+  cluster-name-expression: new String('default')
+  # 以主机名和端口号区分服务
+  combine-host-port: true

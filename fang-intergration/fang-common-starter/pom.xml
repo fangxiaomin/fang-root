@@ -42,10 +42,16 @@
             <artifactId>hutool-all</artifactId>
             <version>${hutool.version}</version>
         </dependency>
-        <!-- Hystrix实现了断路器模式-->
+        <!-- Hystrix实现了断路器模式，需要开启  hystrix的模块需要 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+
+        <!--Dashboard显示Unable to connect to Command Metric Stream。需要添加以下的注解，开启Actuator   hystrix-dashboard  urbine  以及被监控模块需要引用-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
     </dependencies>

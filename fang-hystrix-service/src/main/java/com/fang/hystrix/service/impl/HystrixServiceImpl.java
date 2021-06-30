@@ -6,11 +6,9 @@ import cn.hutool.json.JSONUtil;
 import com.fang.common.web.Result;
 import com.fang.hystrix.entity.Order;
 import com.fang.hystrix.service.IHystrixService;
-import com.netflix.hystrix.HystrixObservableCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCollapser;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
-import com.netflix.hystrix.contrib.javanica.annotation.ObservableExecutionMode;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheRemove;
 import com.netflix.hystrix.contrib.javanica.cache.annotation.CacheResult;
 import com.netflix.hystrix.contrib.javanica.command.AsyncResult;
@@ -22,7 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
-import javax.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.Future;
 
