@@ -2,9 +2,11 @@ package com.fang.user.service.impl;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
+import com.fang.common.web.Result;
 import com.fang.order.dto.OrderUserDto;
-import com.fang.order.feign.OrderFeginClient;
+import com.fang.order.entity.Order;
 import com.fang.order.parms.OrderInfoParm;
+import com.fang.user.feign.UserOrderFeignClient;
 import com.fang.user.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,7 @@ import javax.annotation.Resource;
 public class UserServiceImpl implements IUserService {
 
     @Resource
-    private OrderFeginClient orderFeginClient;
+    private UserOrderFeignClient orderFeginClient;
 
     @Override
     public String getOrderData() {
@@ -37,5 +39,14 @@ public class UserServiceImpl implements IUserService {
         }
         log.info("返回结果集为： {} " + JSONUtil.toJsonStr(orderUserDto));
         return orderUserDto.getSn();
+    }
+
+    @Override
+    public String getUserException(Long id) {
+        Result<Order>  result = orderFeginClient.getUserException(id);
+        log.info("返回结果集为： {} " + JSONUtil.toJsonStr(result));
+        Order order = result.getData();
+        String userName = order.getUsername();
+        return userName;
     }
 }

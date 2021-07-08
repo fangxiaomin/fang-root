@@ -1,5 +1,7 @@
 package com.fang.user.service;
 
+import com.fang.common.web.Result;
+
 /**
  * @description:
  * @projectName:fang-root
@@ -11,4 +13,6 @@ package com.fang.user.service;
 public interface IUserService {
 
     String getOrderData();
+
+    String getUserException(Long id);
 }

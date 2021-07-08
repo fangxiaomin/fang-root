@@ -25,6 +25,13 @@ public class OrderController {
     @Autowired
     IOrderService orderService;
 
+    @RequestMapping("/getWay")
+    public String getWay(){
+        Order user = orderService.getOrder(1L);
+        log.info("根据id获取用户信息，用户名称为：{}",user.getUsername());
+        return "hello,这是userServer的7072   订单 服务";
+    }
+
     @GetMapping("/{id}")
     public Result<Order> getUser(@PathVariable Long id) {
         Order user = orderService.getOrder(id);

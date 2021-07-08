@@ -22,3 +22,55 @@ eureka:
     lease-expiration-duration-in-seconds: 10 #如果心跳检测一直没有发送，10秒后会从eureka服务器中将此服务剔除
     status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/doc.html #固定端口
 #    status-page-url: http://${spring.cloud.client.ip-address}:${randomServerPort.value[7000,7005]}/document.html #随机端口
+
+
+
+zuul:
+  routes:  #给服务配置路由
+    fang-order:
+      path: /orderService/**
+    fang-user:
+      path: /userService/**
+  ignored-services: fang-order,fang-user #关闭默认路由配置
+  prefix: /api  #给网关路由添加前缀
+    #配置过滤敏感的请求头信息，设置为空就不会过滤,cookie默认是禁用的  防止路由时的Cookie及Authorization的丢失
+  sensitive-headers: Cookie,Set-Cookie,Authorization
+    #设置为true重定向是会添加host请求头
+  add-host-header: true
+  # 禁用OwnZuulFilter的示例配置：  开启之后  OwnZuulFilter  的 拦截就不起作用
+  retryable: true # 关闭重试机制
+  OwnZuulFilter:
+    pre:
+      disable: true
+
+
+
+##########   通过SpringBoot Actuator来查看Zuul中的路由信息。   http://localhost:9200/actuator/routes/details
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'routes'
+
+############ 路由转发时HystrixCommand的执行超时时间
+hystrix:
+  # 用于控制HystrixCommand的行为
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            # 配置HystrixCommand执行的超时时间，执行超过该时间会进行服务降级处理
+            timeoutInMilliseconds: 1000
+
+#####   设置路由转发时请求连接及处理的超时时间：
+ribbon:
+  # 服务请求连接超时时间（毫秒）
+  ConnectTimeout: 10000
+  # 服务请求处理超时时间（毫秒）
+  ReadTimeout: 30000
+
+
+
+
+

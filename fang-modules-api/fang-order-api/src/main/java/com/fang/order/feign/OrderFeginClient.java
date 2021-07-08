@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @createTime:2021/6/16 17:24
  * @version:1.0
  */
-@FeignClient(value = "fang-order",contextId = "orderUser",path = "/orderFeign",configuration  = FeignExceptionConfig.class,fallback = OrderFeginFallback.class)
+@FeignClient(value = "fang-order",contextId = "orderUserTest",path = "/orderFeign",configuration  = FeignExceptionConfig.class,fallback = OrderFeginFallback.class)
 public interface OrderFeginClient {
 
     @PostMapping("/order/getOrderInfo")

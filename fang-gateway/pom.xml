@@ -13,7 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>fang-gateway</name>
-    <description>网关中心</description>
+    <description>zuul  网关中心 8100 </description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -29,6 +29,19 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+
+       <!-- zuul网关-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
+        </dependency>
+        <!--Dashboard显示Unable to connect to Command Metric Stream。需要添加以下的注解，开启Actuator   hystrix-dashboard  urbine  以及被监控模块需要引用-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+
     </dependencies>
 
     <build>
