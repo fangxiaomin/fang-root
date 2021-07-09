@@ -1,0 +1,45 @@
+#服务名称
+spring:
+  application:
+    name: config-service
+  cloud:
+    config:
+      server:
+        git:
+          # 配置存储配置信息的Git仓库
+          uri: https://gitee.com/fangm886/springcloud-config.git
+          username: 1019463855@qq.com
+          password: 129fllxmj
+          # 开启启动时直接从git获取配置
+          clone-on-start: true
+          # 获取子目录下的配置 -要搜索的路径，填我们刚刚创建的文件夹http://localhost:7079/master/config-dev.yml ||  http://localhost:7079/config/prd ||http://localhost:7079/master/config-dev
+#          search-paths: config
+          search-paths: '{application}'
+
+
+
+#eureka gateway
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://admin:fxm-pactera@127.0.0.1:1111/eureka
+      #http://134.224.249.33:1111/eureka/  测试库
+    registry-fetch-interval-seconds: 5
+    instance-info-replication-interval-seconds: 10
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}  #固定端口
+    #    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${randomServerPort.value[7000,7005]}}  #随机端口
+    #instance-id: ${spring.application.name}:${docker.ipAddress}:${spring.application.instance_id:${server.port}}
+    lease-renewal-interval-in-seconds: 10  #每隔几秒告诉eureka服务器我还存活，用于心跳检测
+    lease-expiration-duration-in-seconds: 10 #如果心跳检测一直没有发送，10秒后会从eureka服务器中将此服务剔除
+    status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/doc.html #固定端口
+#    status-page-url: http://${spring.cloud.client.ip-address}:${randomServerPort.value[7000,7005]}/document.html #随机端口
+
+####开启Actuator的hystrix.stream端点
+management:
+  endpoints:
+    web:
+      exposure:
+        #暴露hystrix监控端点
+        include: hystrix.stream
