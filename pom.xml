@@ -34,6 +34,18 @@
         <module>fang-ribbon-service</module>
         <!--hystrix中心-->
         <module>fang-hystrix-service</module>
+
+        <!--Hystrix Dashboard监控单个Hystrix实例-->
+        <module>fang-hystrix-dashboard</module>
+
+        <!--Hystrix 集群实例监控-->
+        <module>fang-urbine-service</module>
+
+        <!--Config分布式配置中心,服务端  中心  以及  -Bus消息总线 -->
+        <module>fang-config-server</module>
+
+        <!--onfig分布式配置中心,客户端  中心  以及  -Bus消息总线-->
+        <module>fang-config-client</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
