@@ -19,6 +19,12 @@ spring:
         enabled: true
         #配置中心Id
         service-id: config-service
+  # rabbitmq相干配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
 #eureka gateway
 eureka:

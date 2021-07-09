@@ -15,7 +15,12 @@ spring:
           # 获取子目录下的配置 -要搜索的路径，填我们刚刚创建的文件夹http://localhost:7079/master/config-dev.yml ||  http://localhost:7079/config/prd ||http://localhost:7079/master/config-dev
           search-paths: config
 #          search-paths: '{application}'
-
+  # rabbitmq相干配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
 
 #eureka gateway
@@ -36,10 +41,10 @@ eureka:
     status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/doc.html #固定端口
 #    status-page-url: http://${spring.cloud.client.ip-address}:${randomServerPort.value[7000,7005]}/document.html #随机端口
 
-####开启Actuator的hystrix.stream端点
+####暴露bus刷新配置的端点
 management:
   endpoints:
     web:
       exposure:
         #暴露hystrix监控端点
-        include: hystrix.stream
+        include: 'bus-refresh'

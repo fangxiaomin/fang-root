@@ -30,9 +30,16 @@
             <scope>test</scope>
         </dependency>
             <!--配置中心-->
-        <dependency>
+      <!--  <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
+        </dependency>-->
+
+        <!-- 公共实体配置 -->
+        <dependency>
+            <groupId>com.fang</groupId>
+            <artifactId>fang-common-starter</artifactId>
+            <version>${core.version}</version>
         </dependency>
 
     </dependencies>
