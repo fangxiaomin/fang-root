@@ -48,16 +48,17 @@
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
         </dependency>
 
-        <!--配置中心-->
+        <!--客户端 配置中心  spring cloud config 客户端包  -->
          <dependency>
               <groupId>org.springframework.cloud</groupId>
-              <artifactId>spring-cloud-config-server</artifactId>
+              <artifactId>spring-cloud-starter-config</artifactId>
           </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-bus-amqp</artifactId>
-        </dependency>
-        <!--Dashboard显示Unable to connect to Command Metric Stream。需要添加以下的注解，开启Actuator   hystrix-dashboard  urbine  以及被监控模块需要引用-->
+      <!--  消息总线支持-->
+          <dependency>
+              <groupId>org.springframework.cloud</groupId>
+              <artifactId>spring-cloud-starter-bus-amqp</artifactId>
+          </dependency>
+          <!--Dashboard显示Unable to connect to Command Metric Stream。需要添加以下的注解，开启Actuator   hystrix-dashboard  urbine  以及被监控模块需要引用-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>

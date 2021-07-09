@@ -41,7 +41,8 @@ eureka:
     status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/doc.html #固定端口
 #    status-page-url: http://${spring.cloud.client.ip-address}:${randomServerPort.value[7000,7005]}/document.html #随机端口
 
-####暴露bus刷新配置的端点
+####暴露bus刷新配置的端点     配置成  bus消息总线之后， 通过POST http://localhost:7079/actuator/bus-refresh
+  #可以刷新配置文件，无需启动。而且可以多文件刷新，不需要一个一个客户端的刷新   或者使用 Gitee 的WebHooks 回调
 management:
   endpoints:
     web:

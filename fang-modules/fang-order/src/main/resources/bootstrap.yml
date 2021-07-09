@@ -20,7 +20,19 @@ spring:
         #配置中心Id
         service-id: config-service
 
+  # rabbitmq相干配置
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
 
+###开启refresh端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'refresh'  #暴露了refresh接口
 
 #eureka gateway
 eureka:

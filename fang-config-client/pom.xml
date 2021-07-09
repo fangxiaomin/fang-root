@@ -27,21 +27,29 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--配置中心-->
+
+        <!-- 公共实体配置 -->
         <dependency>
+            <groupId>com.fang</groupId>
+            <artifactId>fang-common-starter</artifactId>
+            <version>${core.version}</version>
+        </dependency>
+
+        <!--配置中心-->
+      <!--  <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-config</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bus-amqp</artifactId>
-        </dependency>
+        </dependency>-->
         <!--Dashboard显示Unable to connect to Command Metric Stream。需要添加以下的注解，开启Actuator   hystrix-dashboard  urbine  以及被监控模块需要引用-->
         <!--是用来接收更新的消息，类似心跳检测-->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+        </dependency>-->
 
     </dependencies>
 
