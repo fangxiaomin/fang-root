@@ -1,3 +1,4 @@
-server:
-  port: 7072
 
+###   端口配置到 配置中心了。。。。。
+
+data: ${spring.profiles.active} #用这个来加载配置中心中的数据

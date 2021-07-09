@@ -2,6 +2,23 @@
 spring:
   application:
     name: fang-order
+  cloud:
+    # config客户端配置
+    config:
+      # 分支名称 对应{label}
+      label: master
+      # 启用配置后缀名称  对应{profile}
+      profile: dev
+      # 配置文件名称 #对应 {application}=====配置中心可以根据项目名称进行配置---实现多项目配置
+      name: order-config
+      # 配置中心地址
+      #uri: http://localhost:7079
+      # config-sever集群搭建
+      discovery:
+        #开启 Config 服务发现支持
+        enabled: true
+        #配置中心Id
+        service-id: config-service
 
 
 

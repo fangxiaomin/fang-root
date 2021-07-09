@@ -33,6 +33,11 @@
             <artifactId>fang-common-starter</artifactId>
             <version>${core.version}</version>
         </dependency>
+        <!--配置中心-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
 
        <dependency>
             <groupId>com.fang</groupId>

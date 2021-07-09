@@ -13,8 +13,8 @@ spring:
           # 开启启动时直接从git获取配置
           clone-on-start: true
           # 获取子目录下的配置 -要搜索的路径，填我们刚刚创建的文件夹http://localhost:7079/master/config-dev.yml ||  http://localhost:7079/config/prd ||http://localhost:7079/master/config-dev
-#          search-paths: config
-          search-paths: '{application}'
+          search-paths: config
+#          search-paths: '{application}'
 
 
 
