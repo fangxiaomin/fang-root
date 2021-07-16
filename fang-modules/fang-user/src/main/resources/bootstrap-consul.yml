@@ -1,0 +1,15 @@
+#服务名称
+spring:
+  application:
+    name: fang-user
+  ###  链路追踪Sleuth 配置，配置收集日志的zipkin-server
+  cloud:
+    consul:
+      # 将服务注册到consul
+      host: localhost
+      port: 8500
+      discovery:
+        service-name: ${spring.application.name}
+
+
+
