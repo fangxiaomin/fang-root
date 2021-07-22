@@ -26,6 +26,8 @@
         <module>fang-eureka</module>
         <!--网关中心-->
         <module>fang-gateway</module>
+        <!-- spring cloud gateway -->
+        <module>fang-cloud-gateway</module>
         <!-- 业务中心-api -->
         <module>fang-modules-api</module>
         <!--业务中心-->
@@ -74,10 +76,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-       <!-- <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>-->
         <!--springboot 2.X eureka 依赖 -->
        <dependency>
             <groupId>org.springframework.cloud</groupId>
