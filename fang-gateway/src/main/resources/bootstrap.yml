@@ -1,7 +1,7 @@
 #服务名称
 spring:
   application:
-    name: api-gateway
+    name: api-zuul
 
 
 

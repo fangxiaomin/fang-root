@@ -1,0 +1,117 @@
+#服务名称
+spring:
+  application:
+    name: api-gateWay
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true  #表明gateway开启服务注册和发现的功能，并且spring cloud gateway自动根据服务发现为每一个服务创建了一个router，这个router将以服务名开头的请求路径转发到对应的服务
+          lower-case-service-id: true  #是将请求路径上的服务名配置为小写（因为服务注册的时候，向注册中心注册时将服务名转成大写的了
+      default-filters:
+        - name: Hystrix   #  熔断降级处理
+          args:
+            name: fallbackcmd
+            fallback-uri: forward:/fallback
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 1000  # 令牌桶的容积  # 每秒允许处理的请求数量
+            redis-rate-limiter.burstCapacity: 1000  # 流速 每秒  # 每秒最大处理的请求数量
+            key-resolver: "#{@ipAddressKeyResolver}" #SPEL表达式去的对应的bean  # 限流策略，对应策略的Bean
+      routes:
+        # 路由的ID,我们自定义的路由 ID，保持唯一
+        - id: api-eureka
+          # 匹配后路由地址,目标服务地址
+          #uri: ${service-url.user-service}/user/getWay    lb uri的协议为lb，这样才能启用Gateway的负载均衡功能。lb:类型，表示从微服务注册中心（如Eureka）订阅服务
+          uri: lb://eureka-server
+          order: 1 #order代表的优先级是从小往大排序的，即数值越小，优先级越高。
+          # 路由条件，Predicate 接受一个输入参数，返回一个布尔值结果
+          predicates:
+            # 断言，路径相匹配的进行路由 uri/user/getWay
+           # - Path=/user/getWay             当请求的路径为api-eureka开头的时，转发到  eureka-server   服务器上
+            - Path=/api-eureka/**
+          #配置了一个 id 为 path_route的URI代理规则，路由的规则为：当访问地址http://localhost:9201/user/getWay时，会路由到上游地址http://localhost:7071/user/getWay（uri）
+          filters:
+            - StripPrefix=1
+        - id: api-user
+          uri: lb://fang-user
+          order: 2
+          predicates:
+            - Path=/api-user/**
+          filters:
+        # # 跳过指定路径。前缀 1个  # http://localhost:9201/api-user/user/getWay,必须加上StripPrefix=1，否则访问服务时会带上api-user,访问http://localhost:7071/api-user/user/getWay
+            - StripPrefix=1
+            - PrefixPath=/user # # 在访问的时候，会在请求前面加上 /user 比如请求 http://localhost:9201/api-user/getWay，可以找到访问http://localhost:7071/api-user/user/getWay
+        - id: api-order
+          uri: lb://fang-order
+          order: 3
+          predicates:
+            - Path=/api-order/**
+          filters:
+            - StripPrefix=1  # 跳过指定路径。 前缀 1个
+
+
+#设置最大容错超时时间
+hystrix:
+  command:
+    fallbackcmd:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 2000  #  容错时间  降低
+          semaphore:
+            maxConcurrentRequests: 1000
+      circuitBreaker:
+        sleepWindowInMilliseconds: 5000
+
+#eureka gateway
+eureka:
+  client:
+    # 健康检查配置
+    registerWithEureka: true
+    fetchRegistry: true
+    healthcheck:
+      enabled: true
+    serviceUrl:
+      defaultZone:  http://admin:fxm-pactera@127.0.0.1:1111/eureka
+    enabled: true
+      #http://134.224.249.33:1111/eureka/  测试库
+    registry-fetch-interval-seconds: 5
+    instance-info-replication-interval-seconds: 10
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${server.port}}  #固定端口
+    #    instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${spring.application.instance_id:${randomServerPort.value[7000,7005]}}  #随机端口
+    #instance-id: ${spring.application.name}:${docker.ipAddress}:${spring.application.instance_id:${server.port}}
+    lease-renewal-interval-in-seconds: 10  #每隔几秒告诉eureka服务器我还存活，用于心跳检测
+    lease-expiration-duration-in-seconds: 10 #如果心跳检测一直没有发送，10秒后会从eureka服务器中将此服务剔除
+    status-page-url: http://${spring.cloud.client.ip-address}:${server.port}/doc.html #固定端口
+#    status-page-url: http://${spring.cloud.client.ip-address}:${randomServerPort.value[7000,7005]}/document.html #随机端口
+
+
+# 健康检查配置
+feign:
+  sentinel:
+    enabled: true
+
+
+####开启Actuator的hystrix.stream端点
+management:
+  endpoints:
+    web:
+      exposure:
+        #暴露监控端点
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+# 健康检查配置
+
+
+logging:
+  level:
+    com.kangma: TRACE
+    org.hibernate: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.hibernate.type.descriptor.sql.BasicExtractor: TRACE

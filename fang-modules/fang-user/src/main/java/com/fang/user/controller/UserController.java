@@ -39,5 +39,11 @@ public class UserController {
         return "hello,这是userServer的7071 服务";
     }
 
+    @RequestMapping("/getByUsername")
+    public String getByUsername(){
+        return "hello,这是userName=  吴亦凡";
+    }
+
+
 
 }

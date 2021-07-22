@@ -19,4 +19,16 @@ spring:
         data-key: configuration
         defaultContext: ${spring.application.name}
 
+dendpoints:
+  health:
+    sensitive: false
+  restart:
+    enable: true
+  shutdown:
+    enabled: true
+
+management:
+  security:
+    enabled: false
+
 
