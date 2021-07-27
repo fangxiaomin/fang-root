@@ -1,5 +1,7 @@
 package com.fang.fangcloudgateway.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,11 +16,12 @@ import java.util.Map;
  * @createTime:2021/7/21 16:59
  * @version:1.0
  */
-
+@Api(tags = "测试swagger")
 @RestController
 public class FallbackController {
 
     @GetMapping("/fallback")
+    @ApiOperation("swagger接口")
     public Object fallback() {
         Map<String,Object> result = new HashMap<>();
         result.put("data",null);

@@ -15,6 +15,8 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <swagger.version>2.9.2</swagger.version>
+        <swagger.m.version>1.0.6</swagger.m.version>
     </properties>
     <dependencies>
 
@@ -45,6 +47,31 @@
             <artifactId>fang-order-api</artifactId>
             <version>${core.version}</version>
         </dependency>
+
+        <!-- API文档配置 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>1.9.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zyplayer</groupId>
+            <artifactId>swagger-mg-ui</artifactId>
+            <version>${swagger.m.version}</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
