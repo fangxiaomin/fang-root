@@ -48,6 +48,8 @@
 
         <!--onfig分布式配置中心,客户端  中心  以及  -Bus消息总线-->
         <module>fang-config-client</module>
+        <!--Spring Boot Admin 可以对SpringBoot应用的各项指标进行监控，-->
+        <module>fang-admin-server</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>

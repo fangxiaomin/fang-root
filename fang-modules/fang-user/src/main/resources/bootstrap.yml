@@ -11,6 +11,12 @@ spring:
     sleuth:
       sampler:
         probability: 1
+  ## spring boot admin  配置
+  boot:
+    admin:
+      client:
+        # 配置admin-server地址
+        url: http://localhost:7081
 
 
 
@@ -48,6 +54,19 @@ feign:
 logging:
   level:    #修改日志级别
     com.jourwon.springcloud.service: debug
+    # 添加开启admin的日志监控
+  file: fang-user.log
+
+#springboot admin 暴露全部的监控信息
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+
 
 ribbon:
   ServerListRefreshInterval: 10  #刷新服务列表源的间隔时间

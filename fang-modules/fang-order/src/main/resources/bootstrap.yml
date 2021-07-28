@@ -36,7 +36,7 @@ spring:
     username: guest
     password: guest
 
-###开启refresh端点
+###config 刷新配置 开启refresh端点
 management:
   endpoints:
     web:

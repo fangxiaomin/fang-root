@@ -30,6 +30,8 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+
+
         <!-- springboot2.0.*对应的eureka依赖 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

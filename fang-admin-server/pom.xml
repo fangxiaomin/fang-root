@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.fang</groupId>
+        <artifactId>fang-root</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+
+    <groupId>com.fang</groupId>
+    <artifactId>fang-admin-server</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>fang-admin-server</name>
+    <description>Spring Boot Admin 可以对SpringBoot应用的各项指标进行监控，</description>
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+      <!--  Spring Boot Admin-->
+        <!-- https://mvnrepository.com/artifact/de.codecentric/spring-boot-admin-starter-server -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-server</artifactId>
+            <version>2.1.3</version>
+        </dependency>
+
+        <!-- spring boot security 依赖,注册中心添加 security 依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+       <!-- 1,当我们启动看到控制台抛出
+        java.lang.IllegalStateException: Calling [asyncError()] is not valid for a request with Async state
+        异常时，不要紧张，这个不影响我们正常监控，如果不想看到这个异常我们可以将
+        tomcat容器换成jetty，这是tomcat和项目的一个io冲突，社区里面作者已经为我们解答了这个问题
+        https://github.com/spring-projects/spring-boot/issues/15057
+        2，避免这个异常我们把pom文件稍作修改就行了。
+        3，遇到下面这个异常也不需要担心。
+        org.springframework.web.reactive.function.BodyExtractors$ReadCancellationException: null
+        产生原因:是因为spring-security引起的冲突。
+        解决办法:
+        将pom文件的如下依赖注释：
+        <dependency>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-security</artifactId>-->
+        <!--</dependency>
+        注释SecuritySecureConfig配置类。
+        配置文件中将:
+        #  security:
+        #    user:
+        #      name: dsj #认证账户
+        #      password: 123456 #认证密码
+        注释掉，需要认证可以自己写认证接口，具体还在研究中.
+        -->
+
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            &lt;!&ndash;排除tomcat容器&ndash;&gt;
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        &lt;!&ndash;集成jetty容器&ndash;&gt;
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+        </dependency>-->
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

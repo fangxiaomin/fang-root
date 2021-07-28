@@ -6,6 +6,10 @@ spring:
   cloud:
     consul:
       # 将服务注册到consul
+     # host: localhost
+     # port: 8500
+      #discovery:
+       # service-name: ${spring.application.name}
       config:
         # 是否启用配置中心功能
         enabled: true
