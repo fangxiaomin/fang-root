@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @description:
+ * @description:    http://localhost:7071/doc.html
  * @projectName:fang-root
  * @see:com.fang.user.controller
  * @author:fxm
@@ -26,7 +26,7 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-    @RequestMapping("/test")
+    @GetMapping("/test")
     @ApiOperation(value = "添加用户", notes = "添加用户")
     public String Test(){
         //todo  通过 feign 调取 order
@@ -38,12 +38,12 @@ public class UserController {
         return userService.getUserException(id);
     }
 
-    @RequestMapping("/getWay")
+    @GetMapping("/getWay")
     public String getWay(){
         return "hello,这是userServer的7071 服务";
     }
 
-    @RequestMapping("/getByUsername")
+    @GetMapping("/getByUsername")
     public String getByUsername(){
         return "hello,这是userName=  吴亦凡";
     }

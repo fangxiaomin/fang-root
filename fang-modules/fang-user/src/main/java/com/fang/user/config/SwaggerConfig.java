@@ -62,7 +62,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     }
 
     private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("营销中心swagger接口文档").description("营销中心swagger接口文档").version("1.0").build();
+        return new ApiInfoBuilder().title("用户中心swagger接口文档").description("用户中心swagger接口文档").version("1.0").build();
     }
 
     @Bean

@@ -27,8 +27,8 @@ eureka:
 
 zuul:
   routes:  #给服务配置路由
-    fang-order:
-      path: /orderService/**
+    fang-order: # 模块名称
+      path: /orderService/**  #路由规则
     fang-user:
       path: /userService/**
   ignored-services: fang-order,fang-user #关闭默认路由配置

@@ -177,10 +177,104 @@ Hystrix具备服务降级、服务熔断、线程隔离、请求缓存、请求�
 - 启动类上添加@EnableTurbine来启用Turbine相关功能
 - 集群地址：http://localhost:7077/tuebine.stream title为：hystrix-client。可以看到监控实例是多个
 ## 6.OpenFeign服务消费者 
-## 7.-Zuul服务网关
-## 8.Config分布式配置中心
+&nbsp;&nbsp;&nbsp;
+Spring Cloud OpenFeign 是声明式的服务调用工具，它整合了Ribbon和Hystrix，拥有负载均衡和服务容错功能.需要加上依赖：spring-cloud-starter-openfeign
+在启动类上添加@EnableFeignClients注解来启用Feign的客户端功能。
+-  通过@FeignClient注解实现了一个Feign客户端，其中的value为user-service表示这是对user-service服务的接口调用客户端。
+-  添加服务降级实现类UserFallbackService
+- 配置文件添加 ribbon相关的配置
+-  在配置文件开启Hystrix功能:
+```
+   feign.hystrix.enabled: true
+```
+## 7.-Zuul服务网关 （fang-gateway）
+API网关为微服务架构中的服务提供了统一的访问入口，客户端通过API网关访问相关服务。API网关的定义类似于设计模式中的门面模式，它相当于整个微服务架构中的门面，所有客户端的访问都通过它来进行路由及过滤。
+- 它实现了请求路由、负载均衡、校验过滤、服务容错、服务聚合等功能。
+- 添加依赖：spring-cloud-starter-netflix-zuul
+- 启动类上添加@EnableZuulProxy注解来启用Zuul的API网关功能
+- 在配置文件配置路由规则，可以设置统一访问前缀、关闭默认规则等等规则都可以配置
+- 自定义的过滤器类型，添加OwnZuulFilter类继承ZuulFilter，访问：http://localhost:9200/api/orderService/order/getWay
+- 通过SpringBoot Actuator来查看Zuul中的路由信息，通过访问http://localhost:9200/actuator/routes查看简单路由信息：
+## 8.Config分布式配置中心  （fang-config-server   fang-config-client）
+ springcloud config 分为服务端和客户端 2个部分，服务端分为分布式配置中心
+是一个独立的应用。主要是从配置仓库获取配置信息并提供给客户端使用。也就是说，服务端必须开启。
+一般存储在git仓库。
+- 添加相关的依赖
+- 启动类上添加@EnableConfigServer注解来启用配置中心功能
+- 服务端配置文件添加配置：仓库地址，用户名，密码等
+- 客户端配置文件可以配置：分支，环境，文件夹等信息
+- 刷新配置：添加Actuator的依赖，然后在bootstrap.yml中开启refresh端点，在controller 里面添加@RefreshScope注解用于刷新配置
+- 每次更改需要调用刷新接口进行刷新，无法动态
 ## 9.Bus消息总线
-## 10.Sleuth服务链路跟踪
+Spring Cloud Bus 配合 Spring Cloud Config 使用可以实现配置的动态刷新。目前 Spring Cloud Bus 支持两种消息代理：RabbitMQ 和 Kafka
+Spring Cloud Bus 通过轻量消息代理连接各个分布的节点
+- 需要RabbitMQ
+- config服务端添加依赖  spring-cloud-starter-bus-amqp
+- config服务端配置文件添加rabbitmq配置
+- 暴露了刷新配置的Actuator端点
+- 客户端添加相关依赖 spring-cloud-starter-bus-amqp
+- 客户端添加rabbitmq配置
+- 启动相关服务，然后登录rabbitMQ后台，会发现springCloudBus的交换机及三个以 springCloudBus.anonymous开头的队列
+- 当配置文件修改了：调用暴露的端点刷新所有配置：http://localhost:7079/actuator/bus-refresh
+- 配合WebHooks使用，WebHooks相当于是一个钩子函数，我们可以配置当向Git仓库push代码时触发这个钩子函数。当我们向配置仓库push代码时就会自动刷新服务配置了
+## 10.Sleuth服务链路跟踪 （ order 和  user 来演示）
+Spring Cloud Sleuth 是分布式系统中跟踪服务间调用的工具，它可以直观地展示出一次请求的调用过程。Zipkin是Twitter的一个开源项目，可以用来获取和分析Spring Cloud Sleuth 中产生的请求链路跟踪日志，它提供了Web界面来帮助我们直观地查看请求链路跟踪信息。
+- 添加相关依赖spring-cloud-starter-zipkin
+- 配置文件配置收集日志的zipkin-server访问地址，同时可设置收集率
+- 下载zipkin的jar包。然后启动：java -jar zipkin-server-2.12.9-exec.jar，Zipkin页面访问地址：http://localhost:9411
+- 启动相关的服务，然后多次请求，就可以看到完整的请求链路，每个服务的耗时等。
+- 可以使用elk进行保存 追踪日志
+- 安装Elasticsearch，安装可视化工具Kibana
+- 修改启动参数将信息存储到Elasticsearch
+```
+  # STORAGE_TYPE：表示存储类型 ES_HOSTS：表示ES的访问地址
+  java -jar zipkin-server-2.12.9-exec.jar --STORAGE_TYPE=elasticsearch --ES_HOSTS=localhost:9200
+```
 ## 11.Consul服务注册发现与配置中心
+Spring Cloud Consul 为 SpringBoot 应用提供了 Consul的支持，Consul既可以作为注册中心使用，也可以作为配置中心使用。
+Spring Cloud Consul 具有如下特性：
+- 支持服务治理：Consul作为注册中心时，微服务中的应用可以向Consul注册自己，并且可以从Consul获取其他应用信息；
+- 支持客户端负责均衡：包括Ribbon和Spring Cloud LoadBalancer；
+- 支持Zuul：当Zuul作为网关时，可以从Consul中注册和发现应用；
+- 支持分布式配置管理：Consul作为配置中心时，使用键值对来存储配置信息；
+- 支持控制总线：可以在整个微服务系统中通过 Control Bus 分发事件消息。
+#### 使用Consul作为注册中心，
+- 安装并运行Consul，首先我们从官网下载Consul，地址：https://www.consul.io/downloads.html
+- 使用开发模式启动：(consul agent -dev) 通过以下地址可以访问Consul的首页：http://localhost:8500
+- 将注册中心换成consul,依赖也改成Consul的，并添加SpringBoot Actuator的依赖
+- 修改配置文件的注册中心，换成consul的
+#### 使用Consul作为配置中心，
+- 添加相关依赖：spring-cloud-starter-consul-config
+- 配置文件：启动配置中心功能，格式、目录、分隔符、配置key的名字等
+- 就可以获取配置文件的内容了
+- Consul使用其**_自带的Control Bus_** 实现了一种事件传递机制，从而实现了**_动态刷新功能_**。使用Spring Cloud Config的时候，我们需要调用接口，通过Spring Cloud Bus才能刷新配置
 ## 12.Gateway服务网关
 ## 13.Admin服务监控中心
+
+
+## Spring Cloud入门-Oauth2授权之JWT集成  （fang-oauth）
+- 1.首先配置RedisTokenStoreConfig ，添加在Redis中存储令牌的配置：
+    - 这个配置是Redis用来存储token，服务重启后，无需重新获取token
+- 2.配置SecurityConfig
+    - 添加SpringSecurity配置，允许授权相关路径的访问及表单登录
+    - 获取token的时候参数grant_type 
+    - 密码加密器等
+- 3.配置ResourceServerConfig
+  - 资源服务器配置
+  -  配置需要保护的资源路径
+- 4.配置AuthorizationServerConfig
+  - 授权服务器配置
+  - 配置认证管理器以及业务实现
+    - 配置令牌存储策略
+    - 配置业务处理service
+    - 认证管理器
+  - 配置认证规则，
+    - 需要注意allowFormAuthenticationForClients 这个，允许通过get param方式进行验证。 如果不开放的话，就只能走Basic Auth验证。否则401
+    - 不配置上面的，client_id 、client_secret传了也无法访问，http://localhost:7088/oauth/token
+  - 配置客户端
+      - 配置配置client_id 、client_secret、过期时间等
+      - 配置作用域等
+  - token解析网站：https://jwt.io/
+    https://blog.csdn.net/weixin_38937840/article/details/90321037?utm_medium=distribute.pc_feed_404.none-task-blog-2~default~BlogCommendFromBaidu~default-6.nonecase&depth_1-utm_source=distribute.pc_feed_404.none-task-blog-2~default~BlogCommendFromBaidu~default-6.nonecas
+        https://blog.csdn.net/qq_34490951/article/details/79930270?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-8.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-8.control
+![img_4.png](img_4.png)
