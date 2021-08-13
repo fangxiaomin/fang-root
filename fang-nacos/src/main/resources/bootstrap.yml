@@ -13,6 +13,10 @@ spring:
         server-addr: http://localhost:8848
         # 这里我们获取的yaml格式的配置
         file-extension: yaml
+        namespace: 58c519ea-d55e-412a-a5b3-6131a8beef43  #配置命名空间（填入前面新建的命名空间ID）
+        group: group-test   #配置分组
+        refresh-enabled: true #配置自动刷新
+     #   prefix: test  #配置文件的前缀
 
 management:
   endpoint:

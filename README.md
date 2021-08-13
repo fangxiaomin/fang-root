@@ -361,3 +361,4 @@ Nacos 具有如下特性:
 如：fang-nacos-dev.yaml
 - 在nacos添加配置。然后测试。，能够拿到 数据。如果去更改，点击发布，
   Nacos和Consul一样都支持动态刷新配置。当我们在Nacos页面上修改配置并发布后，控制台可以收到： Refresh keys changed: [config.info]。说明动态更新了
+- 可以配置namespace，group等来区分dev  test等环境以及不同的分组区分不同的模块
