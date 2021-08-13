@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 
 /**注意： @EnableGlobalMethodSecurity 可以配置多个参数:
  *prePostEnabled :决定Spring Security的前注解是否可用 [@PreAuthorize,@PostAuthorize,..] 此处表明可用
@@ -38,6 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin()
                 .permitAll();
+
     }
 
     /**
@@ -59,23 +61,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     //验证用户信息与密码
-  /*  @Override
+   @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .userDetailsService(userDetailsService())
                 .passwordEncoder(passwordEncoder());
-    }*/
+    }
     //用户信息业务类
-  /*  @Override
+  /* @Override
     @Bean
     public UserDetailsService userDetailsService() {
         return new DomainUserDetailsService();
     }*/
 
-    /*@Bean
+    @Bean
     public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
         return new SecurityEvaluationContextExtension();
-    }*/
+    }
 
    
 

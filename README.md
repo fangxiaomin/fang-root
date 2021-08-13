@@ -248,10 +248,55 @@ Spring Cloud Consul 具有如下特性：
 - 配置文件：启动配置中心功能，格式、目录、分隔符、配置key的名字等
 - 就可以获取配置文件的内容了
 - Consul使用其**_自带的Control Bus_** 实现了一种事件传递机制，从而实现了**_动态刷新功能_**。使用Spring Cloud Config的时候，我们需要调用接口，通过Spring Cloud Bus才能刷新配置
-## 12.Gateway服务网关
+## 12.Gateway服务网关  （fang-cloud-gatway）
+ 主要功能就是路由、熔断降低、限流、监控、健康检查
+Spring Cloud Gateway 具有如下特性：
+ - 动态路由：能够匹配任何请求属性；
+ - 可以对路由指定 Predicate（断言）和 Filter（过滤器）；
+ - 集成Hystrix的断路器功能；
+ - 集成 Spring Cloud 服务发现功能；
+ - 易于编写的 Predicate（断言）和 Filter（过滤器）；
+ - 请求限流功能；
+ - 支持路径重写。
+   #### gatway主要步骤如下：
+- 添加相关的jar  依赖
+- Gateway 提供了两种不同的方式用于配置路由，一种是通过yml文件来配置，另一种是通过Java Bean来配置，
+- 配置文件进行配置，通过配置zuul组件的相关规则可以指定到相关的服务，详细配置在配置文件
+- 结合注册中心，需要  lb 协议支持负载均衡
+-  gatway提供狠多个Route Predicate工厂可以进行组合
+- 过滤器配置，例如可以配置指定路径的位数进行去除
+#### Hystrix GatewayFilter
+Hystrix 过滤器允许你将断路器功能添加到网关路由中，使你的服务免受级联故障的影响，并提供服务降级处理。
+- 相关依赖
+- 开发降级处理逻辑
+- 配置文件配置Hystrix相关的，当路由出错时会转发到服务降级处理的控制器上
+#### RequestRateLimiter GatewayFilter 
+RequestRateLimiter 过滤器可以用于限流，使用RateLimiter实现来确定是否允许当前请求继续进行，如果请求太大默认会返回HTTP 429-太多请求状态。
+- 添加依赖
+- 添加限流策略的配置类，这里有两种策略一种是根据请求参数中的username进行限流，另一种是根据访问IP进行限流；
+- 使用Redis来进行限流，所以需要添加Redis和RequestRateLimiter的配置，这里对所有的GET请求都进行了按IP来限流的操作；
+- 配置文件配置相关限流政策，连续访问多次  ，后面的就会请求失败
+#### Retry GatewayFilter
+对路由请求进行重试的过滤器，可以根据路由请求返回的HTTP状态码来确定是否进行重试
+- 配置文件配置相关，当服务500 的时候会重试多次
 ## 13.Admin服务监控中心
-
-
+- Spring Boot Admin 可以对SpringBoot应用的各项指标进行监控，可以作为微服务架构中的监控中心来使用。
+- SpringBoot应用可以通过Actuator来暴露应用运行过程中的各项指标，Spring Boot Admin通过这些指标来监控SpringBoot应用，然后通过图形化界面呈现出来。Spring Boot Admin不仅可以监控单体应用，还可以和Spring Cloud的注册中心相结合来监控微服务应用。
+  #### Spring Boot Admin 可以提供应用的以下监控信息：
+- 监控应用运行过程中的概览信息；
+- 度量指标信息，比如JVM、Tomcat及进程信息；
+- 环境变量信息，比如系统属性、系统环境变量以及应用配置信息；
+- 查看所有创建的Bean信息；
+- 查看应用中的所有配置信息；
+- 查看应用运行日志信息；
+- 查看JVM信息；
+- 查看可以访问的Web端点；
+- 查看HTTP跟踪信息。
+    
+springboot admin 配置
+- 在启动类上添加@EnableAdminServer来启用admin-server功能
+- 访问如下地址打开Spring Boot Admin的主页：http://localhost:7081
+- 点击wallboard按钮，选择admin-client查看监控信息；度量指标信息，比如JVM、Tomcat及进程信息；环境变量信息，比如系统属性、系统环境变量以及应用配置信息
 ## Spring Cloud入门-Oauth2授权之JWT集成  （fang-oauth）
 - 1.首先配置RedisTokenStoreConfig ，添加在Redis中存储令牌的配置：
     - 这个配置是Redis用来存储token，服务重启后，无需重新获取token
@@ -265,16 +310,54 @@ Spring Cloud Consul 具有如下特性：
 - 4.配置AuthorizationServerConfig
   - 授权服务器配置
   - 配置认证管理器以及业务实现
-    - 配置令牌存储策略
+    - 配置令牌存储策略:
+      @Autowired
+      @Qualifier("redisTokenStore")
+      private TokenStore tokenStore;
     - 配置业务处理service
     - 认证管理器
-  - 配置认证规则，
+  - 配置认证规则
     - 需要注意allowFormAuthenticationForClients 这个，允许通过get param方式进行验证。 如果不开放的话，就只能走Basic Auth验证。否则401
     - 不配置上面的，client_id 、client_secret传了也无法访问，http://localhost:7088/oauth/token
   - 配置客户端
       - 配置配置client_id 、client_secret、过期时间等
       - 配置作用域等
+  - 使用JWT存储令牌，不使用redis
+    - 添加JwtTokenStoreConfig
+    - 新增JWT内容增强器
+    - 更改配置
+        @Autowired
+        @Qualifier("jwtTokenStore")
+        private TokenStore tokenStore;
   - token解析网站：https://jwt.io/
-    https://blog.csdn.net/weixin_38937840/article/details/90321037?utm_medium=distribute.pc_feed_404.none-task-blog-2~default~BlogCommendFromBaidu~default-6.nonecase&depth_1-utm_source=distribute.pc_feed_404.none-task-blog-2~default~BlogCommendFromBaidu~default-6.nonecas
-        https://blog.csdn.net/qq_34490951/article/details/79930270?utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-8.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-8.control
 ![img_4.png](img_4.png)
+    针对Oauth2+Jwt的使用，本处只是简单的实现了获取token的开发，主要是熟悉相关的配置以及流程。也可以结合相关的服务实现
+    网关鉴权，微服务间的多平台登录等。这个项目https://gitee.com/fangm886/oauth-demo-jwt.git 是一个单独的oauth+jwt的服务
+    基本上是可以使用的。
+
+## Nacos实现注册和配置中心
+Nacos 提供了一组简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。是Spring Cloud Alibaba 的组件
+Nacos 具有如下特性:
+ - 服务发现和服务健康监测：支持基于DNS和基于RPC的服务发现，支持对服务的实时的健康检查，阻止向不健康的主机或服务实例发送请求；
+ - 动态配置服务：动态配置服务可以让您以中心化、外部化和动态化的方式管理所有环境的应用配置和服务配置；
+ - 动态 DNS 服务：动态 DNS 服务支持权重路由，让您更容易地实现中间层负载均衡、更灵活的路由策略、流量控制以及数据中心内网的简单DNS解析服务；
+ - 服务及其元数据管理：支持从微服务平台建设的视角管理数据中心的所有服务及元数据
+#####   使用
+ - 下载 https://github.com/alibaba/nacos/releases  ，下载之后解压。如果系统未配置环境变量，需要配置
+- 启动，找到bin目录： startup.cmd -m standalone
+- 访问http://localhost:8848/nacos可以查看Nacos的主页，默认账号密码都是nacos
+#### 搭建 nacos 服务  （fang-nacos）
+- 加入相关依赖，spring-cloud-starter-alibaba-nacos-discovery
+- 配置文件配置nacos  地址
+- 启动服务之后就可以在nacos中心看到启动的服务
+- 支持负载均衡，启动多个服务，请求会交替访问
+####  作为配置中心
+- 在pom加入配置的依赖包，spring-cloud-starter-alibaba-nacos-config
+- 配置文件配置分支，以及配置文件的nacos地址，然后写一个测试类
+- 在Nacos中添加配置，下Nacos中的dataid的组成格式及与SpringBoot配置文件中的属性对应关系
+```
+  ${spring.application.name}-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+```
+如：fang-nacos-dev.yaml
+- 在nacos添加配置。然后测试。，能够拿到 数据。如果去更改，点击发布，
+  Nacos和Consul一样都支持动态刷新配置。当我们在Nacos页面上修改配置并发布后，控制台可以收到： Refresh keys changed: [config.info]。说明动态更新了

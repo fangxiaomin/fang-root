@@ -1,14 +1,12 @@
 package com.fang.user.controller;
 
 import com.fang.common.web.Result;
+import com.fang.user.entity.AddUserParm;
 import com.fang.user.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @description:    http://localhost:7071/doc.html
@@ -27,7 +25,7 @@ public class UserController {
     private IUserService userService;
 
     @GetMapping("/test")
-    @ApiOperation(value = "添加用户", notes = "添加用户")
+    @ApiOperation(value = "查询用户", notes = "查询用户")
     public String Test(){
         //todo  通过 feign 调取 order
         return userService.getOrderData();
@@ -46,6 +44,12 @@ public class UserController {
     @GetMapping("/getByUsername")
     public String getByUsername(){
         return "hello,这是userName=  吴亦凡";
+    }
+
+    @PostMapping("/addUser")
+    @ApiOperation(value = "添加用户", notes = "添加用户")
+    public String addUser(AddUserParm addUserParm){
+        return "成功";
     }
 
 

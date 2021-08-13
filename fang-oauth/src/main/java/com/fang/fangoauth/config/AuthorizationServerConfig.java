@@ -1,5 +1,6 @@
 package com.fang.fangoauth.config;
 
+import com.fang.fangoauth.enhancer.JwtTokenEnhancer;
 import com.fang.fangoauth.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,8 +12,13 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -41,8 +47,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private UserService userService;
 
     @Autowired
-    @Qualifier("redisTokenStore")
+    @Qualifier("jwtTokenStore")
     private TokenStore tokenStore;
+
+    @Autowired
+    private JwtAccessTokenConverter jwtAccessTokenConverter;
+
+    @Autowired
+    private JwtTokenEnhancer jwtTokenEnhancer;
 
     /**
      * 使用密码模式需要配置    ==== 配置认证管理器以及用户信息业务实现
@@ -52,13 +64,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.authenticationManager(authenticationManager)
+        /*endpoints.authenticationManager(authenticationManager)
                 .userDetailsService(userService)
                 //配置令牌存储策略
-                .tokenStore(tokenStore);
-        /*TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+                .tokenStore(tokenStore)
+        .accessTokenConverter(jwtAccessTokenConverter);*/  //该配置是  jwt模式产生  token
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         List<TokenEnhancer> delegates = new ArrayList<>();
-        // 配置jwt内容增强器
+        // 配置jwt内容增强器--上面是非增强器的配置
         delegates.add(jwtTokenEnhancer);
         delegates.add(jwtAccessTokenConverter);
         tokenEnhancerChain.setTokenEnhancers(delegates);
@@ -68,7 +81,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 // 配置令牌存储策略
                 .tokenStore(tokenStore)
                 .accessTokenConverter(jwtAccessTokenConverter)
-                .tokenEnhancer(tokenEnhancerChain);*/
+                .tokenEnhancer(tokenEnhancerChain);
     }
 
     /**
@@ -78,10 +91,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                // 配置client_id   客户端账户
-                .withClient("admin")
-                // 配置client_secret  客户端密码
-                .secret(passwordEncoder.encode("admin123456"))
+                // 配置  client_id   客户端账户
+                .withClient("android")
+                // 配置  client_secret  客户端密码
+                .secret(passwordEncoder.encode("android"))
                 // 配置访问token的有效期
                 .accessTokenValiditySeconds(3600)
                 // 配置刷新token的有效期
@@ -99,7 +112,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //                .authorizedGrantTypes("authorization_code", "password", "refresh_token");
     }
 /**
- * @Description: //配置认证规则，那些需要认证那些不需要 
+ * @Description: //配置认证规则，那些需要认证那些不需要
  * 
  **/
     @Override
