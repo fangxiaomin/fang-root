@@ -1,0 +1,40 @@
+#服务名称
+spring:
+  application:
+    name: fang-sentinel-service
+  cloud:
+    nacos:
+      discovery:
+        # 配置Nacos地址
+        server-addr: http://localhost:8848
+        ##  作为配置中心的配置
+    sentinel:
+      transport:
+        # 配置Sentinel dashborad地址
+        dashboard: http://localhost:8080
+        port: 8719
+          # 添加Nacos数据源配置
+#      datasource:
+#        ds1:
+#          nacos:
+#            server-addr: http://localhost:8848
+#            dataId: fang-sentinel-service-sentinel
+#            groupId: DEFAULT_GROUP
+#            data-type: json
+#            rule-type: flow
+
+management:
+  endpoint:
+    web:
+      exposure:
+        include: '*'
+
+
+# 打开sentinel对feign的支持
+feign:
+  sentinel:
+    enabled: true
+
+
+
+

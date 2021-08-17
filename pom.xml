@@ -78,11 +78,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--springboot 2.X eureka 依赖 -->
-       <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
+
 
        <!--
         consul  作为注册中心需要的添加的  jar   包

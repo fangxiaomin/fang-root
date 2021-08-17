@@ -342,7 +342,7 @@ Nacos 具有如下特性:
  - 动态配置服务：动态配置服务可以让您以中心化、外部化和动态化的方式管理所有环境的应用配置和服务配置；
  - 动态 DNS 服务：动态 DNS 服务支持权重路由，让您更容易地实现中间层负载均衡、更灵活的路由策略、流量控制以及数据中心内网的简单DNS解析服务；
  - 服务及其元数据管理：支持从微服务平台建设的视角管理数据中心的所有服务及元数据
-#####   使用
+#####   Nacos下载、安装、使用
  - 下载 https://github.com/alibaba/nacos/releases  ，下载之后解压。如果系统未配置环境变量，需要配置
 - 启动，找到bin目录： startup.cmd -m standalone
 - 访问http://localhost:8848/nacos可以查看Nacos的主页，默认账号密码都是nacos
@@ -362,3 +362,19 @@ Nacos 具有如下特性:
 - 在nacos添加配置。然后测试。，能够拿到 数据。如果去更改，点击发布，
   Nacos和Consul一样都支持动态刷新配置。当我们在Nacos页面上修改配置并发布后，控制台可以收到： Refresh keys changed: [config.info]。说明动态更新了
 - 可以配置namespace，group等来区分dev  test等环境以及不同的分组区分不同的模块
+
+## Sentinel实现服务限流、熔断与降级
+Sentinel具有如下特性:
+- 丰富的应用场景：承接了阿里巴巴近 10 年的双十一大促流量的核心场景，例如秒杀，可以实时熔断下游不可用应用；
+- 完备的实时监控：同时提供实时的监控功能。可以在控制台中看到接入应用的单台机器秒级数据，甚至 500 台以下规模的集群的汇总运行情况；
+- 广泛的开源生态：提供开箱即用的与其它开源框架/库的整合模块，例如与 Spring Cloud、Dubbo、gRPC 的整合；
+- 完善的 SPI 扩展点：提供简单易用、完善的 SPI 扩展点。您可以通过实现扩展点，快速的定制逻辑。
+#### Sentinel 下载 安装
+ - 下载地址：https://github.com/alibaba/Sentinel/releas
+ - 运行：java -jar sentinel-dashboard-1.7.0.jar
+ - Sentinel控制台默认运行在8080端口上，登录账号密码均为sentinel，通过如下地址可以进行访问：http://localhost:8080
+#### Sentinel 使用
+
+
+
+
