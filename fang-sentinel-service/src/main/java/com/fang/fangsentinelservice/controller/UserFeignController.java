@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("/nacos")
 public class UserFeignController {
 
-//    @Qualifier("com.fang.fangsentinelservice.feign.NacosUserService")
     @Autowired
     private NacosUserService nacosUserService;
 
