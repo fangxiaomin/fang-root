@@ -36,13 +36,6 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
 
-
-        <!-- 公共实体配置 -->
-        <!--<dependency>
-            <groupId>com.fang</groupId>
-            <artifactId>fang-db-starter</artifactId>
-            <version>${core.version}</version>
-        </dependency>-->
         <!--nacos 注册中心-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

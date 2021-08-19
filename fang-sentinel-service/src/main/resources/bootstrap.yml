@@ -23,11 +23,6 @@ spring:
             groupId: DEFAULT_GROUP
             data-type: json
             rule-type: flow
-    alibaba:
-      seata:
-        #自定义事务组名称需要与seata-server中的对应
-        tx-service-group: my_test_tx_group
-
 management:
   endpoint:
     web:
