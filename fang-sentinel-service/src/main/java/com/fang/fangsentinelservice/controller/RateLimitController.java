@@ -2,7 +2,7 @@ package com.fang.fangsentinelservice.controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.fang.common.web.Result;
+import com.fang.fangsentinelservice.entity.Result;
 import com.fang.fangsentinelservice.handler.CustomBlockHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

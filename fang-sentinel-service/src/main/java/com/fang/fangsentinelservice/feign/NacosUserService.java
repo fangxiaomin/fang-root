@@ -1,6 +1,6 @@
 package com.fang.fangsentinelservice.feign;
 
-import com.fang.common.web.Result;
+import com.fang.fangsentinelservice.entity.Result;
 import com.fang.fangsentinelservice.entity.User;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.*;

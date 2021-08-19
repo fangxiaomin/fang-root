@@ -2,7 +2,7 @@ package com.fang.fangsentinelservice.handler;
 
 
 import com.alibaba.csp.sentinel.slots.block.BlockException;
-import com.fang.common.web.Result;
+import com.fang.fangsentinelservice.entity.Result;
 
 public class CustomBlockHandler {
 

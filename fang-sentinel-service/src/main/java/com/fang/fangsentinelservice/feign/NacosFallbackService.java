@@ -1,6 +1,6 @@
 package com.fang.fangsentinelservice.feign;
 
-import com.fang.common.web.Result;
+import com.fang.fangsentinelservice.entity.Result;
 import com.fang.fangsentinelservice.entity.User;
 import org.springframework.stereotype.Component;
 

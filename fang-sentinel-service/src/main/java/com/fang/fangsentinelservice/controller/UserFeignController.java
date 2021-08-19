@@ -1,6 +1,6 @@
 package com.fang.fangsentinelservice.controller;
 
-import com.fang.common.web.Result;
+import com.fang.fangsentinelservice.entity.Result;
 import com.fang.fangsentinelservice.entity.User;
 import com.fang.fangsentinelservice.feign.NacosUserService;
 import org.springframework.beans.factory.annotation.Autowired;

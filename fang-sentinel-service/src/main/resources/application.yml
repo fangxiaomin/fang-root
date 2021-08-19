@@ -1,6 +1,13 @@
 spring:
   profiles:
     active: dev
+  datasource:
+    # JDBC 配置(驱动类自动从url的mysql识别,数据源类型自动识别)
+    url: jdbc:mysql://123.60.4.191:3306/kyd-dev?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false
+    username: xt_dev
+    password: xt123456*
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    #连接池配置(通常来说，只需要修改initialSize、minIdle、maxActive
 
 server:
   port: 7084

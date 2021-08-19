@@ -1,7 +1,7 @@
 package com.fang.fangsentinelservice.controller;
 
 import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.fang.common.web.Result;
+import com.fang.fangsentinelservice.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

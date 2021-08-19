@@ -4,24 +4,29 @@ spring:
     name: fang-sentinel-service
   cloud:
     nacos:
-      discovery:
-        # 配置Nacos地址
-        server-addr: http://localhost:8848
+      server-addr: http://localhost:8848
+#      discovery:
+#        # 配置Nacos地址
+#        server-addr: http://localhost:8848
         ##  作为配置中心的配置
     sentinel:
       transport:
         # 配置Sentinel dashborad地址
         dashboard: http://localhost:8080
-        port: 8719
+#        port: 8719
           # 添加Nacos数据源配置
-#      datasource:
-#        ds1:
-#          nacos:
-#            server-addr: http://localhost:8848
-#            dataId: fang-sentinel-service-sentinel
-#            groupId: DEFAULT_GROUP
-#            data-type: json
-#            rule-type: flow
+      datasource:
+        ds2:
+          nacos:
+            server-addr: http://localhost:8848
+            dataId: fang-sentinel-service-sentinel
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+    alibaba:
+      seata:
+        #自定义事务组名称需要与seata-server中的对应
+        tx-service-group: my_test_tx_group
 
 management:
   endpoint:

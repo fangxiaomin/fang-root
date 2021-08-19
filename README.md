@@ -363,7 +363,7 @@ Nacos 具有如下特性:
   Nacos和Consul一样都支持动态刷新配置。当我们在Nacos页面上修改配置并发布后，控制台可以收到： Refresh keys changed: [config.info]。说明动态更新了
 - 可以配置namespace，group等来区分dev  test等环境以及不同的分组区分不同的模块
 
-## Sentinel实现服务限流、熔断与降级
+## Sentinel实现服务限流、熔断与降级  （fang-sentinel-service）
 Sentinel具有如下特性:
 - 丰富的应用场景：承接了阿里巴巴近 10 年的双十一大促流量的核心场景，例如秒杀，可以实时熔断下游不可用应用；
 - 完备的实时监控：同时提供实时的监控功能。可以在控制台中看到接入应用的单台机器秒级数据，甚至 500 台以下规模的集群的汇总运行情况；
@@ -374,7 +374,40 @@ Sentinel具有如下特性:
  - 运行：java -jar sentinel-dashboard-1.7.0.jar
  - Sentinel控制台默认运行在8080端口上，登录账号密码均为sentinel，通过如下地址可以进行访问：http://localhost:8080
 #### Sentinel 使用
+ - 添加相关依赖jar 
+ - 配置文件主要是配置了Nacos和Sentinel控制台的地址
+ - RateLimitController类，添加一些限流配置，也可以自定义一些限流处理逻辑
+- 然后在NACOS配置限流的规则，在Sentinel控制台配置流控规则，根据@SentinelResource注解的value值：
+- 熔断功能，降级等。配合feign使用
+- 在配置文件打开Sentinel对Feign的支持：
+#### 使用Nacos存储Sentinel 规则 
+- 添加依赖： sentinel-datasource-nacos
+- 在application.yml配置文件，添加Nacos数据源配置：
+- 添加配置：
+- 相关参数解释：
+  - resource：资源名称；
+  - limitApp：来源应用；
+  - grade：阈值类型，0表示线程数，1表示QPS；
+  - count：单机阈值；
+  - strategy：流控模式，0表示直接，1表示关联，2表示链路；
+  - controlBehavior：流控效果，0表示快速失败，1表示Warm Up，2表示排队等待；
+  - clusterMode：是否集群。
+#####  注意：部分JAR 会影响nacos  的datasource的配置，导致项目无法启动。
 
 
+## 分布式事务 Seata
+
+### 四种事务模式：
+ Seata 将为用户提供了 AT、TCC、SAGA 和 XA 事务模式，为用户打造一站式的分布式解决方案。
+ - Transaction Coordinator (TC)： 事务协调器，维护全局事务的运行状态，负责协调并驱动全局事务的提交或回滚；
+ - Transaction Manager(TM)： 控制全局事务的边界，负责开启一个全局事务，并最终发起全局提交或全局回滚的决议；
+ - Resource Manager (RM)： 控制分支事务，负责分支注册、状态汇报，并接收事务协调器的指令，驱动分支（本地）事务的提交和回滚。
+  #### 一个典型的分布式事务过程
+   - TM 向 TC 申请开启一个全局事务，全局事务创建成功并生成一个全局唯一的 XID；
+   - XID 在微服务调用链路的上下文中传播；
+   - RM 向 TC 注册分支事务，将其纳入 XID 对应全局事务的管辖；
+   - TM 向 TC 发起针对 XID 的全局提交或回滚决议；
+   - TC 调度 XID 下管辖的全部分支事务完成提交或回滚请求。
+![img_5.png](img_5.png)
 
 

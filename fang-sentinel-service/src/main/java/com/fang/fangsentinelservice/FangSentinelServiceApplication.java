@@ -3,13 +3,14 @@ package com.fang.fangsentinelservice;
 import com.alibaba.cloud.sentinel.annotation.SentinelRestTemplate;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
 @EnableFeignClients
-@SpringBootApplication
+//@MapperScan(basePackages = {"com.fang.fangsentinelservice.mapper"})
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 public class FangSentinelServiceApplication {
 
     public static void main(String[] args) {
@@ -21,7 +22,7 @@ public class FangSentinelServiceApplication {
      * 
      **/
     @Bean
-    @LoadBalanced
+//    @LoadBalanced
     @SentinelRestTemplate
     public RestTemplate restTemplate() {
         return new RestTemplate();
