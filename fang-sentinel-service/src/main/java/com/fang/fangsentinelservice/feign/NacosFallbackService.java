@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * @description:   服务降级处理
  */
-@Component
 public class NacosFallbackService implements NacosUserService {
     @Override
     public Result insert(User user) {

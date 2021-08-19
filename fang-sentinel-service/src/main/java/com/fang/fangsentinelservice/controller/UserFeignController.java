@@ -4,6 +4,7 @@ import com.fang.fangsentinelservice.entity.Result;
 import com.fang.fangsentinelservice.entity.User;
 import com.fang.fangsentinelservice.feign.NacosUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequestMapping("/nacos")
 public class UserFeignController {
 
+//    @Qualifier("com.fang.fangsentinelservice.feign.NacosUserService")
     @Autowired
     private NacosUserService nacosUserService;
 
