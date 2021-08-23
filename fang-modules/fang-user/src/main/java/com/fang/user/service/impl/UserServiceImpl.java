@@ -6,7 +6,10 @@ import com.fang.common.web.Result;
 import com.fang.order.dto.OrderUserDto;
 import com.fang.order.entity.Order;
 import com.fang.order.parms.OrderInfoParm;
+import com.fang.user.entity.User;
 import com.fang.user.feign.UserOrderFeignClient;
+import com.fang.user.mapper.IOrderMapper;
+import com.fang.user.mapper.IUserMapper;
 import com.fang.user.service.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -27,6 +30,9 @@ public class UserServiceImpl implements IUserService {
 
     @Resource
     private UserOrderFeignClient orderFeginClient;
+
+    @Resource
+    private IUserMapper userMapper;
 
     @Override
     public String getOrderData() {
@@ -49,4 +55,11 @@ public class UserServiceImpl implements IUserService {
         String userName = order.getUsername();
         return userName;
     }
+
+    @Override
+    public User getUserById(Integer id) {
+        return userMapper.getUserById(id);
+    }
+
+
 }

@@ -1,6 +1,9 @@
 package com.fang.user.service;
 
 import com.fang.common.web.Result;
+import com.fang.user.entity.Order;
+import com.fang.user.entity.User;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * @description:
@@ -15,4 +18,8 @@ public interface IUserService {
     String getOrderData();
 
     String getUserException(Long id);
+
+    User getUserById(Integer id);
+
+
 }

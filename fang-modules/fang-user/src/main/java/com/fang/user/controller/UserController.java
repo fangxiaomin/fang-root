@@ -2,6 +2,9 @@ package com.fang.user.controller;
 
 import com.fang.common.web.Result;
 import com.fang.user.entity.AddUserParm;
+import com.fang.user.entity.Order;
+import com.fang.user.entity.User;
+import com.fang.user.service.IOrderService;
 import com.fang.user.service.IUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,6 +26,8 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IOrderService orderService;
 
     @GetMapping("/test")
     @ApiOperation(value = "查询用户", notes = "查询用户")
@@ -51,6 +56,24 @@ public class UserController {
     public String addUser(AddUserParm addUserParm){
         return "成功";
     }
+
+
+    ////////////////////////////////////////////////////////////
+
+    @GetMapping("/getUserById")
+    @ApiOperation(value = "mybatis查询详情", notes = "查询用户111")
+    public User getUserById(@RequestParam("id") Integer id){
+        //todo  通过 feign 调取 order
+        return userService.getUserById(id);
+    }
+
+    @GetMapping("/getOrderById")
+    @ApiOperation(value = "mybatisPlus查询订单", notes = "查询订单")
+    public Order getOrderById(@RequestParam("id") Integer id){
+        //todo  通过 feign 调取 order
+        return orderService.getOrderById(id);
+    }
+
 
 
 
