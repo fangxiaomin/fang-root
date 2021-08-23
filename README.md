@@ -410,20 +410,23 @@ Sentinel具有如下特性:
    - TC 调度 XID 下管辖的全部分支事务完成提交或回滚请求。
 ![img_5.png](img_5.png)
 
-用seata-server中/bin/seata-server.bat文件启动seata-server。
+#### 服务的下载  和配置
+ - 去官网下载seata的包，然后解压
+ - 下载两个文件config.txt和nacos-config.sh
+ - config.txt 部分地方需要修改，如下图所示：
+ - 修改配置文件，file.conf配置文件,事务日志存储模式为db及数据库连接信息； 
+ - 修改registry.conf配置文件，指明注册中心为nacos，及修改nacos连接信息即可；
+ - 用seata-server中/bin/seata-server.bat文件启动seata-server。或：sh nacos-config.sh -h 127.0.0.1 -p 9948 -t dev -g demo
+ - 数据库表创建
+#### 客户端的配置
+ - 配置文件#自定义事务组名称需要与seata-server中的对应 tx-service-group: my_test_tx_group
+ - 添加并修改file.conf配置文件，
+ - 添加并修改registry.conf配置文件
+ - 在启动类中取消数据源的自动创建：
+- 创建配置使用Seata对数据源进行代理
 
-错误信息：
-[imeoutChecker_1] i.s.c.r.netty.NettyClientChannelManager  : no available server to connect.
-no available service 'default' found, please make sure registry config corre_
 
 
-https://blog.csdn.net/u014087208/article/details/108511340?utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control
-
-全面 的配置信息
-https://www.jb51.net/article/215029.htm
-
-
-sh nacos-config.sh -h 127.0.0.1 -p 9948 -t dev -g demo
 
 
 
