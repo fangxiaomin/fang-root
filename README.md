@@ -345,7 +345,7 @@ Nacos 具有如下特性:
 #####   Nacos下载、安装、使用
  - 下载 https://github.com/alibaba/nacos/releases  ，下载之后解压。如果系统未配置环境变量，需要配置
 - 启动，找到bin目录： startup.cmd -m standalone
-- 访问http://localhost:8848/nacos可以查看Nacos的主页，默认账号密码都是nacos
+- 访问 http://localhost:8848/nacos  可以查看Nacos的主页，默认账号密码都是nacos
 #### 搭建 nacos 服务  （fang-nacos）
 - 加入相关依赖，spring-cloud-starter-alibaba-nacos-discovery
 - 配置文件配置nacos  地址
@@ -409,5 +409,26 @@ Sentinel具有如下特性:
    - TM 向 TC 发起针对 XID 的全局提交或回滚决议；
    - TC 调度 XID 下管辖的全部分支事务完成提交或回滚请求。
 ![img_5.png](img_5.png)
+
+用seata-server中/bin/seata-server.bat文件启动seata-server。
+
+错误信息：
+[imeoutChecker_1] i.s.c.r.netty.NettyClientChannelManager  : no available server to connect.
+no available service 'default' found, please make sure registry config corre_
+
+
+https://blog.csdn.net/u014087208/article/details/108511340?utm_medium=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-2%7Edefault%7EBlogCommendFromMachineLearnPai2%7Edefault-1.control
+
+全面 的配置信息
+https://www.jb51.net/article/215029.htm
+
+
+sh nacos-config.sh -h 127.0.0.1 -p 9948 -t dev -g demo
+
+
+
+
+
+
 
 
