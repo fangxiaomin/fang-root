@@ -424,10 +424,10 @@ Sentinel具有如下特性:
  - 添加并修改registry.conf配置文件
  - 在启动类中取消数据源的自动创建：
 - 创建配置使用Seata对数据源进行代理
+针对seata  专门写了博客来进行详细介绍：https://blog.csdn.net/weixin_38716141/article/details/119827650
 
 
-
-
+## 引入juint 和 mybatis / mybatis-plus  在  模块 ：fang-user
 
 
 

@@ -49,10 +49,11 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public String getUserException(Long id) {
-        Result<Order>  result = orderFeginClient.getUserException(id);
-        log.info("返回结果集为： {} " + JSONUtil.toJsonStr(result));
-        Order order = result.getData();
-        String userName = order.getUsername();
+//        Result<Order>  result = orderFeginClient.getUserException(id);
+//        log.info("返回结果集为： {} " + JSONUtil.toJsonStr(result));
+//        Order order = result.getData();
+//        String userName = order.getUsername();
+        String userName = "juint Test 2021-08-25";
         return userName;
     }
 
