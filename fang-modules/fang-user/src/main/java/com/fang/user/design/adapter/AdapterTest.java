@@ -1,5 +1,9 @@
 package com.fang.user.design.adapter;
 
+import com.fang.user.design.adapter.sub.SourceSub1;
+import com.fang.user.design.adapter.sub.SourceSub2;
+import com.fang.user.design.adapter.sub.Sourceable;
+
 /**
  * @description:
  */
@@ -21,8 +25,8 @@ public class AdapterTest {
         Sourceable source2 = new SourceSub2();
         source1.method1();
         source1.method2();
-        source2.method1();
-        source2.method2();
+//        source2.method1();
+//        source2.method2();
 
     }
 }

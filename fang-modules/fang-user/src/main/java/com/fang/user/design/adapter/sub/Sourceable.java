@@ -1,4 +1,4 @@
-package com.fang.user.design.adapter;
+package com.fang.user.design.adapter.sub;
 
 /**
  * @description:

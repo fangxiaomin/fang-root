@@ -1,4 +1,4 @@
-package com.fang.user.design.adapter;
+package com.fang.user.design.adapter.sub;
 
 /**
  * @description:
@@ -8,7 +8,7 @@ package com.fang.user.design.adapter;
  * @createTime:2021/8/27 15:07
  * @version:1.0
  */
-public class SourceSub1 extends Wrapper2{
+public class SourceSub1 extends Wrapper2 {
     @Override
     public void method1(){
         System.out.println("1111111111111111");
