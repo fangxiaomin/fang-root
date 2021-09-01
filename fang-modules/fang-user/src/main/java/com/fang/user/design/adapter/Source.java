@@ -1,7 +1,7 @@
 package com.fang.user.design.adapter;
 
 /**
- * @description:  源角色
+ * @description:  源角色  待适配
  */
 public class Source {
 

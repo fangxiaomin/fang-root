@@ -3,7 +3,7 @@ package com.fang.user.design.Facade;
 import sun.plugin2.gluegen.runtime.CPU;
 
 /**
- * @description:   这个类相当于 是Facade类中   将所有关联的 类整合到这个类里面，然后进行对外统一提供
+ * @description:   这个类相当于 是Facade类中   将所有关联的 类整合到这个类里面，然后进行对外统一提供  外观类
  * @version:1.0
  */
 public class Computer {
@@ -34,6 +34,10 @@ public class Computer {
         disk.shutdown();
         System.out.println("computer closed!");
     }
+
+    public void startupCpu(){ cpu.startup();}
+
+    public void startupMemory(){ memory.startup();}
 
 
 

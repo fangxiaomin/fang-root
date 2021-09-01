@@ -6,7 +6,10 @@ package com.fang.user.design.qiaojie;
  */
 public class MyBridge extends BridgeQ{
 
-    public void method2(){
-        getSourceableQ().method();
+    @Override
+    public void method1() {
+    getSourceableQ().method();
     }
+
+
 }

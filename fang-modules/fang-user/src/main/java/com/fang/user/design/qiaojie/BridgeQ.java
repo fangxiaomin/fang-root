@@ -7,9 +7,7 @@ package com.fang.user.design.qiaojie;
 public abstract class BridgeQ {
    private SourceableQ sourceableQ;
 
-    public void method1() {
-        sourceableQ.method();
-    }
+    public abstract void method1();
 
     public SourceableQ getSourceableQ() {
         return sourceableQ;
