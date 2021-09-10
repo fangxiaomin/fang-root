@@ -14,12 +14,13 @@ public class AdapterTest {
         Targetable targetable= new Adapter();
         targetable.doSomething();
         targetable.method2();
+        System.out.println("======================================");
 
         //  对象的适配器模式
         Targetable targetable2= new WrapperAdapter(new Source());
         targetable2.doSomething();
         targetable2.method2();
-
+        System.out.println("======================================");
         //接口的适配器模式
         Sourceable source1 = new SourceSub1();
         Sourceable source2 = new SourceSub2();
