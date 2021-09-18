@@ -17,6 +17,7 @@
         <java.version>1.8</java.version>
         <swagger.version>2.9.2</swagger.version>
         <swagger.m.version>1.0.6</swagger.m.version>
+        <redssion.version>3.11.6</redssion.version>
     </properties>
     <dependencies>
 
@@ -124,6 +125,29 @@
             <version>3.2.0</version>
         </dependency>
 
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>${redssion.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.redisson/redisson -->
+      <!--  <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.16.2</version>
+        </dependency>-->
+
+        <!-- https://mvnrepository.com/artifact/org.redisson/redisson-spring-boot-starter -->
+        <!--<dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
+            <version>3.16.2</version>
+        </dependency>-->
 
 
 
