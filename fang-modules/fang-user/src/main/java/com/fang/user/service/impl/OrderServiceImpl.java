@@ -3,7 +3,9 @@ package com.fang.user.service.impl;
 import com.fang.user.entity.Order;
 import com.fang.user.mapper.IOrderMapper;
 import com.fang.user.service.IOrderService;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.annotation.Resource;
 import java.util.StringJoiner;
@@ -16,7 +18,12 @@ import java.util.stream.IntStream;
  * @author:fxm
  * @createTime:2021/8/23 17:19
  * @version:1.0
+ *
+ * BeanPostProcessor
+ * BeanFactoryPostProcessor
  */
+
+@EnableTransactionManagement
 @Service
 public class OrderServiceImpl implements IOrderService {
     @Resource
@@ -27,7 +34,6 @@ public class OrderServiceImpl implements IOrderService {
         Order order = orderMapper.selectById(id);
         return order;
     }
-
     public static void main(String[] args) {
         StringJoiner sj =new StringJoiner(",");
         IntStream.range(1,10).forEach(i->sj.add(i+""));
