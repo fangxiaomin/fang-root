@@ -249,7 +249,7 @@ Spring Cloud Consul 具有如下特性：
 - 就可以获取配置文件的内容了
 - Consul使用其**_自带的Control Bus_** 实现了一种事件传递机制，从而实现了**_动态刷新功能_**。使用Spring Cloud Config的时候，我们需要调用接口，通过Spring Cloud Bus才能刷新配置
 ## 12.Gateway服务网关  （fang-cloud-gatway）
- 主要功能就是路由、熔断降低、限流、监控、健康检查
+ 主要功能就是路由、熔断降级、限流、监控、健康检查
 Spring Cloud Gateway 具有如下特性：
  - 动态路由：能够匹配任何请求属性；
  - 可以对路由指定 Predicate（断言）和 Filter（过滤器）；
