@@ -1,7 +1,10 @@
 package com.fang.user.algorithm.linked_list;
 
 import java.util.Scanner;
-
+/**
+ * @Description:  旋转指针。。。。   1 -> 2 -> 3 -> 4 -> 5 -> null    5 -> 4 -> 3 -> 2 -> 1 -> null
+ *
+ **/
 public class ReverseLinkedList {
     // 方法一：迭代
     public ListNode reverseList1(ListNode head){
